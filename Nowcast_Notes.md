@@ -74,3 +74,22 @@ This file contains a collection of notes on the NYFED Nowcast model. The variabl
     
     [A261RX1Q020SBEA – Real Gross Private Domestic Investment]: Fixed Investment: Residential (Chained 2012 Dollars) Represents inflation-adjusted expenditures by private businesses on residential structures.
     
+The model should be run as follows:
+
+    (1a) Use "pull_data.py" to produce data for the most recent vintage -- typically today's date -- and the previous vintage -- typically one week prior. 
+    (1b) Insert non-public data available to CEA into xlsx file manually. 
+    (2) Update recent vintage in "example_DFM.py" and run to porudce RESDFM.pickle and RES. These results will be used to produce forecasts for variables of interest. 
+    (3) Use "example_Nowcast.py" to produce estimate of variables of interest, after updating dates, variable to be forecasted, and horizon date. 
+
+This NYFED Liberty Street note (https://libertystreeteconomics.newyorkfed.org/2018/08/opening-the-toolbox-the-nowcasting-code-on-github/) claims: "Moreover, the nowcasting framework allows us to decompose the nowcast changes into the contributions due to each data release. The impact from a data release is computed multiplying the economic surprise (the difference between a release and its expected value according to the model) by its weight, which reflects how individual indicators affect aggregate economic activity at any given time." 
+
+    How can we do this with our code? 
+
+
+Might be worth it to do a comparison against NYFed using their recent dates (9/27 and 10/4). And compare with our forecasts (Atlanta, professionals, etc.).
+
+The new NYFED model augments the existing in the following ways:
+
+(1) stochastic volatility, outlier adj to latent variable dynamics. allow for lead-lag relationships (do not assume lags have zero dependency). goal is to introduce nonlinearity which hopefully reduce model's sensitivity to large shocks.
+(2) modify loading structure. introduce several other factors to capture COVID data reelases, nominal series correlation (price levels, etc.)
+(3) Bayesian estimation approach to generate probability intervals for each point estimate of real GDP growth.
