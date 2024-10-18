@@ -27,9 +27,7 @@ This file contains a collection of notes on the NYFED Nowcast model. The variabl
     [NAPM – ISM Manufacturing PMI]: (Seasonally Adjusted) An indicator of the economic health of the manufacturing sector, based on surveys of purchasing managers.
     
     [UMCSENT – University of Michigan: Consumer Sentiment]: (Seasonally Adjusted) Measures consumer confidence in economic activity, based on surveys of households.
-    
-    HOUST – Housing Starts: Total: New Privately Owned Housing Units Started (Seasonally Adjusted) Indicates the number of new housing construction projects begun in a given period.
-    
+        
     [HOUST – Housing Starts]: Total: New Privately Owned Housing Units Started (Seasonally Adjusted) Indicates the number of new housing construction projects begun in a given period.
     
     [INDPRO – Industrial Production Index]: (Seasonally Adjusted) Tracks the real output of all relevant establishments located in the U.S. within the industrial sector.
@@ -93,3 +91,10 @@ The new NYFED model augments the existing in the following ways:
 (1) stochastic volatility, outlier adj to latent variable dynamics. allow for lead-lag relationships (do not assume lags have zero dependency). goal is to introduce nonlinearity which hopefully reduce model's sensitivity to large shocks.
 (2) modify loading structure. introduce several other factors to capture COVID data reelases, nominal series correlation (price levels, etc.)
 (3) Bayesian estimation approach to generate probability intervals for each point estimate of real GDP growth.
+
+
+New NY Fed Technical paper
+-- add growth LR trend
+-- add quarterly transformation to convert to monthly data 
+-- start estimation of parameters in 1/1/1985 instead of 1/1/2000 
+-- 2 var changes: remove capacity utilization (collinear with industrial production?) and remove PPI

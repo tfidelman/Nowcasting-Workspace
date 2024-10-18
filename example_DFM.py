@@ -19,14 +19,14 @@ pd.set_option('display.expand_frame_repr', False)
 
 
 #-------------------------------------------------User Inputs
-vintage      = '2024-10-08'                                                   # vintage dataset to use for estimation
+vintage      = '2024-07-01'                                                   # vintage dataset to use for estimation
 country      = 'US'                                                           # United States macroeconomic data
-sample_start = dt.strptime("2000-01-01", '%Y-%m-%d').date().toordinal() + 366 # estimation sample
+sample_start = dt.strptime("1985-01-01", '%Y-%m-%d').date().toordinal() + 366 # estimation sample
 
 
 #-------------------------------------------------Load model specification and dataset.
 # Load model specification structure `Spec`
-Spec = load_spec('Spec_US_example.xls')
+Spec = load_spec('Spec_US_update.xls')
 
 # Parse `Spec`
 SeriesID         = Spec.SeriesID
@@ -70,7 +70,7 @@ fig.show()
 
 
 #-------------------------------------------------Run dynamic factor model (DFM) and save estimation output as 'ResDFM'.
-threshold = 1e-4 # Set to 1e-5 for more robust estimates
+threshold = 1e-5 # Set to 1e-5 for more robust estimates
 Res = dfm(X,Spec,threshold)
 Res = {"Res": Res,"Spec":Spec}
 

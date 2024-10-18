@@ -39,7 +39,7 @@ def dfm(X,Spec,threshold = 1e-5,max_iter = 5000):
     #       . Z | Smoothed states. Rows give time, and columns are organized according to Res.C.
     #       . C | Observation matrix. The rows correspond
     #          to each series, and the columns are organized as shown below:
-    #         - 1-20: These columns give the factor loa dings. For example, 1-5
+    #         - 1-20: These columns give the factor loadings. For example, 1-5
     #              give loadings for the first block and are organized in
     #              reverse-chronological order (f^G_t, f^G_t-1, f^G_t-2, f^G_t-3,
     #              f^G_t-4). Columns 6-10, 11-15, and 16-20 give loadings for
@@ -82,22 +82,22 @@ def dfm(X,Spec,threshold = 1e-5,max_iter = 5000):
     print("\n")
     print("Estimating the dynamic factor model (DFM) \n\n")
 
-    T, N   = X.shape
-    r      = Par["r"].copy()
-    p      = Par["p"]
-    nQ     = Par["nQ"]
-    blocks = Par["blocks"].copy()
+    T, N   = X.shape                        # find time series length and number of vars
+    r      = Par["r"].copy()                # number of common factors for each block (1,4)
+    p      = Par["p"]                       # AR(1) process for factor
+    nQ     = Par["nQ"]                      # number of quarterly series
+    blocks = Par["blocks"].copy()           # load the block structure (1s and 0s)
 
-    i_idio = np.append(np.ones(N-nQ),np.zeros(nQ)).reshape((-1,1),order="F") == 1
+    i_idio = np.append(np.ones(N-nQ),np.zeros(nQ)).reshape((-1,1),order="F") == 1   # col vector of true and false
 
-    # R*Lambda = q; Contraints on the loadings of the quartrly variables
-    R_mat = np.array([2,-1,0,0,0,3,0,-1,0,0,2,0,0,-1,0,1,0,0,0,-1]).reshape((4,5))
-    q     = np.zeros((4,1))
+    # R*Lambda = q; Contraints on the loadings of the quarterly variables
+    R_mat = np.array([2,-1,0,0,0,3,0,-1,0,0,2,0,0,-1,0,1,0,0,0,-1]).reshape((4,5))  # unsure where these numbers come from
+    q     = np.zeros((4,1))                                                         # only 3 quarterly series in Spec_US_example.xls
 
     # Prepare data -----------------------------------------------------------
-    Mx   = np.nanmean(X,axis = 0)
-    Wx   = np.nanstd(X,axis = 0,ddof = 1)
-    xNaN = (X - np.tile(Mx,(T,1))) / np.tile(Wx,(T,1))
+    Mx   = np.nanmean(X,axis = 0)                       # mean of each row
+    Wx   = np.nanstd(X,axis = 0,ddof = 1)               # sd of each column
+    xNaN = (X - np.tile(Mx,(T,1))) / np.tile(Wx,(T,1))  # standardized matrix of data, z-scores (mean 0 and std dev 1)
 
     # Initial Conditions------------------------------------------------------
     optNaN           = {}
@@ -246,9 +246,9 @@ def InitCond(x,r,p,blocks,optNaN,Rcon,q,nQ,i_idio):
 
     pC  = Rcon.shape[1]   # Gives 'tent' structure size (quarterly to monthly)
     ppC = max(p,pC)
-    n_b = blocks.shape[1] # Number of blocks
+    n_b = blocks.shape[1] # Number of blocks (1,5) to (5)
 
-    xBal,indNaN = remNaNs_spline(x.copy(),optNaN)  # Spline without NaNs
+    xBal,indNaN = remNaNs_spline(x.copy(),optNaN)  # Spline without NaNs, for expectations to fill in unknown current data
     
     T,N = xBal.shape  # Time T series number N
     nM  = N-nQ        # Number of monthly series

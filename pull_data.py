@@ -49,9 +49,9 @@ alfred_codes = {
 }
 
 real_start_date = '1985-01-01'
-real_end_date = '2024-10-01'
+real_end_date = '2024-10-09'
 start_date = real_start_date
-end_date = '2024-10-01' # 2016-10-08, 2016-10-0
+end_date = '2024-10-09' 
 
 #%% Pull data for each variable from ALFRED and store in a dictionary
 data = {}
@@ -76,6 +76,9 @@ df['A261RX1Q020SBEA'] = df['A261RX1Q020SBEA'].shift(2)
 # rename index column 'Date'
 df.index.name = 'Date'
 
+#%% Add new dummy variable for COVID
+
+
 #%% Save to Excel
 output_file = '{}.xlsx'.format(end_date)  # Specify the output file name
 # Set path data / US 
@@ -83,7 +86,6 @@ output_file = 'data/US/' + output_file
 df.to_excel(output_file, index=True, sheet_name='ALFRED Data')
 
 print(f"Data has been successfully pulled and saved to {output_file} for date, {end_date}.")
-
 
 
 # %%
