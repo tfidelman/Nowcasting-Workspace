@@ -547,7 +547,7 @@ def EMstep(y, A, C, Q, R, Z_0, V_0, r,p,R_mat,q,nQ,i_idio,blocks):
         # Equation 6: Estimate VAR(p) for factor
         A_i[:r_i,:rp] = np.matmul(EZZ_FB[:r_i,:rp],np.linalg.inv(EZZ_BB[:rp,:rp]))
 
-        # Equation 8: Covariance matrix of residuals of VA
+        # Equation 8: Covariance matrix of residuals of VAR
         Q_i[:r_i,:r_i] = (EZZ[:r_i,:r_i] - np.matmul(A_i[:r_i,:rp],EZZ_FB[:r_i,:rp].T))/T
 
         # Place updated results in output matrix
@@ -576,8 +576,8 @@ def EMstep(y, A, C, Q, R, Z_0, V_0, r,p,R_mat,q,nQ,i_idio,blocks):
     EZZ_FB = np.diag(np.diag(np.matmul(Zsmooth[t_start:,1:], Zsmooth[t_start:,:-1].T))) + \
                 np.diag(np.diag(np.sum(VVsmooth[:,t_start:,t_start:], axis = 0)))
 
-    A_i = np.matmul(EZZ_FB,np.diag(1/np.diag((EZZ_BB)))) # Equation 6
-    Q_i = (EZZ - np.matmul(A_i,EZZ_FB.T))/T              # Equation 8
+    A_i = np.matmul(EZZ_FB,np.diag(1/np.diag((EZZ_BB)))) # Equation 6; autoreg coeff
+    Q_i = (EZZ - np.matmul(A_i,EZZ_FB.T))/T              # Equation 8; cov matrix of transition eqn
 
     # Place updated results in output matrix
     A_new[np.ix_(i_subset,i_subset)]   = A_i[:niM,:niM].copy()
