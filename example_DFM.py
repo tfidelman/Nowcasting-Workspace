@@ -13,20 +13,20 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import numpy as np
 
-#%%
+
 #-------------------------------------------------Set dataframe to full view
 pd.set_option('display.expand_frame_repr', False)
 
 
 #-------------------------------------------------User Inputs
-vintage      = '2024-07-01'                                                   # vintage dataset to use for estimation
+vintage      = '2021-12-31'                                                   # vintage dataset to use for estimation
 country      = 'US'                                                           # United States macroeconomic data
-sample_start = dt.strptime("1985-01-01", '%Y-%m-%d').date().toordinal() + 366 # estimation sample
+sample_start = dt.strptime("2020-01-01", '%Y-%m-%d').date().toordinal() + 366 # estimation sample
 
 
 #-------------------------------------------------Load model specification and dataset.
 # Load model specification structure `Spec`
-Spec = load_spec('Spec_US_update.xls')
+Spec = load_spec('Spec_US_update_COVID.xls')
 
 # Parse `Spec`
 SeriesID         = Spec.SeriesID
@@ -70,7 +70,7 @@ fig.show()
 
 
 #-------------------------------------------------Run dynamic factor model (DFM) and save estimation output as 'ResDFM'.
-threshold = 1e-5 # Set to 1e-5 for more robust estimates
+threshold = 1e-3 # Set to 1e-5 for more robust estimates
 Res = dfm(X,Spec,threshold)
 Res = {"Res": Res,"Spec":Spec}
 

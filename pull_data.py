@@ -49,9 +49,9 @@ alfred_codes = {
 }
 
 real_start_date = '1985-01-01'
-real_end_date = '2024-07-03'
+real_end_date = '2021-12-31'
 start_date = real_start_date
-end_date = '2024-07-03' 
+end_date = '2021-12-31' 
 
 #%% Pull data for each variable from ALFRED and store in a dictionary
 data = {}
@@ -75,7 +75,6 @@ df['ULCNFB'] = df['ULCNFB'].shift(2)
 df['A261RX1Q020SBEA'] = df['A261RX1Q020SBEA'].shift(2)
 # rename index column 'Date'
 df.index.name = 'Date'
-
 
 #%% Save to Excel
 output_file = '{}.xlsx'.format(end_date)  # Specify the output file name

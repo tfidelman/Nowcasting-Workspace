@@ -119,6 +119,7 @@ def update_nowcast(X_old,X_new,Time,Spec,Res,series,period,vintage_old,vintage_n
 
         print('\n  Nowcast Detail Table \n')
         print(news_table.iloc[np.where(data_released)[0],:])
+        return(y_old[0], y_new[0], impact_releases.flatten('F'), impact_revisions[0])
 
 def News_DFM(X_old,X_new,Res,t_fcst,v_news):
     # News_DFM()    Calculates changes in news
